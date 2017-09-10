@@ -7,21 +7,31 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B4FE7F21F07DEA1001F1CFF /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */; };
+		8B4FE7F41F081DE6001F1CFF /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F31F081DE6001F1CFF /* Details.swift */; };
+		8B4FE7F81F082627001F1CFF /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */; };
+		8B5B38891F6434780016F15D /* ShowContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */; };
 		8B747CE31F00565E00B2737F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B747CE21F00565E00B2737F /* AppDelegate.swift */; };
-		8B747CE51F00565E00B2737F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B747CE41F00565E00B2737F /* ViewController.swift */; };
+		8B747CE51F00565E00B2737F /* AddressBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B747CE41F00565E00B2737F /* AddressBookViewController.swift */; };
 		8B747CE81F00565E00B2737F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B747CE61F00565E00B2737F /* Main.storyboard */; };
 		8B747CEA1F00565E00B2737F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8B747CE91F00565E00B2737F /* Assets.xcassets */; };
 		8B747CED1F00565E00B2737F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8B747CEB1F00565E00B2737F /* LaunchScreen.storyboard */; };
+		8BC5F6881F04362A0087FED7 /* AddNewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
+		8B4FE7F31F081DE6001F1CFF /* Details.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
+		8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
+		8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowContactDetailsViewController.swift; sourceTree = "<group>"; };
 		8B747CDF1F00565E00B2737F /* Address Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Address Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B747CE21F00565E00B2737F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8B747CE41F00565E00B2737F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		8B747CE41F00565E00B2737F /* AddressBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressBookViewController.swift; sourceTree = "<group>"; };
 		8B747CE71F00565E00B2737F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8B747CE91F00565E00B2737F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8B747CEC1F00565E00B2737F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8B747CEE1F00565E00B2737F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewContactViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +65,16 @@
 			isa = PBXGroup;
 			children = (
 				8B747CE21F00565E00B2737F /* AppDelegate.swift */,
-				8B747CE41F00565E00B2737F /* ViewController.swift */,
+				8B747CE41F00565E00B2737F /* AddressBookViewController.swift */,
 				8B747CE61F00565E00B2737F /* Main.storyboard */,
 				8B747CE91F00565E00B2737F /* Assets.xcassets */,
 				8B747CEB1F00565E00B2737F /* LaunchScreen.storyboard */,
 				8B747CEE1F00565E00B2737F /* Info.plist */,
+				8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */,
+				8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */,
+				8B4FE7F31F081DE6001F1CFF /* Details.swift */,
+				8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */,
+				8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */,
 			);
 			path = "Address Book";
 			sourceTree = "<group>";
@@ -137,7 +152,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B747CE51F00565E00B2737F /* ViewController.swift in Sources */,
+				8BC5F6881F04362A0087FED7 /* AddNewContactViewController.swift in Sources */,
+				8B4FE7F41F081DE6001F1CFF /* Details.swift in Sources */,
+				8B5B38891F6434780016F15D /* ShowContactDetailsViewController.swift in Sources */,
+				8B747CE51F00565E00B2737F /* AddressBookViewController.swift in Sources */,
+				8B4FE7F81F082627001F1CFF /* ContactTableViewCell.swift in Sources */,
+				8B4FE7F21F07DEA1001F1CFF /* ContactDetailsViewController.swift in Sources */,
 				8B747CE31F00565E00B2737F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -302,6 +322,7 @@
 				8B747CF31F00565E00B2737F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
