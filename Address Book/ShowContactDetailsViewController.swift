@@ -28,6 +28,7 @@ class ShowContactDetailsViewController: UITableViewController {
   
   func updateUI() {
     firstNameLabel.text! = details.firstName
+    navigationItem.title = firstNameLabel.text! /* Set the title of the navigation bar to the first name of the contact */
     lastNameLabel.text! = details.lastName
     emailAddressLabel.text! = details.emailAddress
     phoneNumberLabel.text! = details.phoneNumberString
@@ -41,6 +42,11 @@ class ShowContactDetailsViewController: UITableViewController {
     
     /* Identify ta Address table view cell */
     if indexPath.section == 0 && indexPath.row == 4 {
+      /* Display a regular height if there's no address in the label */
+      if addressLabel.text!.isEmpty {
+        return 44
+      }
+      
       /* Set the width of the label to about half the width of the screen so it makes the label multiline using word wrapping (set in IB). Make its height 1000 points to ensure there will be enough room no matter how long the address is */
       addressLabel.frame.size = CGSize(width: view.bounds.size.width - 180,
                                        height: 1000)

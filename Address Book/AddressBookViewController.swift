@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class AddressBookViewController: UIViewController, ContactDetailsViewControllerDelegate {
   
@@ -16,6 +17,7 @@ class AddressBookViewController: UIViewController, ContactDetailsViewControllerD
   
   /* An instance of the data model to hold the details of contacts entered by the user in ContactDetailsViewController */
   var contactDetails: [Details] = []
+  var managedContext: NSManagedObjectContext!
     
   override func viewDidLoad() {
     super.viewDidLoad()
