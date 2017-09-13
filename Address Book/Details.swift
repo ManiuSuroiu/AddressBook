@@ -11,16 +11,10 @@ import UIKit
 class Details {
   var firstName: String
   var lastName: String
-  var emailAddress: String
-  var phoneNumberString: String
-  var address: String
     
-  init(firstName: String, lastName: String, emailAddress: String, phoneNumberString: String, address: String) {
+  init(firstName: String, lastName: String) {
     self.firstName = firstName
     self.lastName = lastName
-    self.emailAddress = emailAddress
-    self.phoneNumberString = phoneNumberString
-    self.address = address
   }
 }
 

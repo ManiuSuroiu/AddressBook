@@ -16,14 +16,15 @@ class AddressBookViewController: UIViewController, ContactDetailsViewControllerD
   @IBOutlet weak var addNewContact: UIButton!
   
   /* An instance of the data model to hold the details of contacts entered by the user in ContactDetailsViewController */
-  var contactDetails: [Details] = []
+  var contactDetails: [Contact] = []
   var managedContext: NSManagedObjectContext!
-    
+      
   override func viewDidLoad() {
     super.viewDidLoad()
     
     /* Set a zero height table footer so the table view doesn't display extra cells */
     contactsTableView.tableFooterView = UIView()
+    performFetch()
   }
   
   override func viewWillAppear(_ animated: Bool) {
@@ -40,25 +41,36 @@ class AddressBookViewController: UIViewController, ContactDetailsViewControllerD
     if segue.identifier == "AddDetails" {
       
       let addNewContactViewController = segue.destination as! AddNewContactViewController
-      addNewContactViewController.delegate = self
+      /*addNewContactViewController.delegate = self */
+      addNewContactViewController.managedContext = managedContext
     
       /* If the user taps on a cell instantiate the ShowContactDetailsViewController and pass it the details data for the contact specified at that indexPath */
     } else if segue.identifier == "ShowDetails" {
       
       let showContactDetailsViewController = segue.destination as! ShowContactDetailsViewController
       if let indexPath = contactsTableView.indexPath(for: sender as! ContactTableViewCell) {
-        showContactDetailsViewController.details = contactDetails[indexPath.row]
+        showContactDetailsViewController.contactDetails = contactDetails[indexPath.row]
       }
     }
   }
   
+  func performFetch() {
+    
+    let fetchRequest = NSFetchRequest<Contact>()
+    let entity = Contact.entity()
+    fetchRequest.entity = entity
+    
+    do {
+      contactDetails = try managedContext.fetch(fetchRequest)
+    } catch let error as NSError {
+      print("Could not fetch: \(error), description: \(error.userInfo)")
+    }
+  }
+  
   /* Implement the method from the protocol - add the new Details object to the data model and table view */
-  func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: Details) {
-    let newRowIndex = contactDetails.count
-    contactDetails.append(details)
-    let indexPath = IndexPath(row: newRowIndex, section: 0)
-    contactsTableView.insertRows(at: [indexPath], with: .automatic)
-    dismiss(animated: true, completion: nil)
+  func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: String) {
+    contactsTableView.reloadData()
+    navigationController?.popToRootViewController(animated: true)
   }
 }
 
@@ -73,15 +85,28 @@ extension AddressBookViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! ContactTableViewCell
     let details = contactDetails[indexPath.row]
-    cell.nameLabel.text! = details.description
+    cell.nameLabel.text! = details.fullName
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+    return true
   }
   
   /* Swipe-to-delete*/
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    
     if editingStyle == .delete {
+      let contactToRemove = contactDetails[indexPath.row]
+      managedContext.delete(contactToRemove)
       contactDetails.remove(at: indexPath.row)
-      tableView.deleteRows(at: [indexPath], with: .fade)
+    }
+    
+    do {
+      try managedContext.save()
+      tableView.deleteRows(at: [indexPath], with: .automatic)
+    } catch let error as NSError {
+      print("Saving error: \(error), description: \(error.userInfo)")
     }
   }
 }

@@ -19,6 +19,8 @@
 		8BC5F6881F04362A0087FED7 /* AddNewContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */; };
 		96D5BC491F67DDDC00CD7462 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D5BC481F67DDDC00CD7462 /* CoreDataStack.swift */; };
 		96D5BC4C1F67F53F00CD7462 /* Address Book.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 96D5BC4A1F67F53F00CD7462 /* Address Book.xcdatamodeld */; };
+		96D5BC4F1F68027C00CD7462 /* Contact+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D5BC4D1F68027C00CD7462 /* Contact+CoreDataClass.swift */; };
+		96D5BC501F68027C00CD7462 /* Contact+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96D5BC4E1F68027C00CD7462 /* Contact+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +38,8 @@
 		8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddNewContactViewController.swift; sourceTree = "<group>"; };
 		96D5BC481F67DDDC00CD7462 /* CoreDataStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
 		96D5BC4B1F67F53F00CD7462 /* Address Book.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "Address Book.xcdatamodel"; sourceTree = "<group>"; };
+		96D5BC4D1F68027C00CD7462 /* Contact+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataClass.swift"; sourceTree = "<group>"; };
+		96D5BC4E1F68027C00CD7462 /* Contact+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Contact+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,6 +56,8 @@
 		8B747CD61F00565E00B2737F = {
 			isa = PBXGroup;
 			children = (
+				96D5BC4D1F68027C00CD7462 /* Contact+CoreDataClass.swift */,
+				96D5BC4E1F68027C00CD7462 /* Contact+CoreDataProperties.swift */,
 				8B747CE11F00565E00B2737F /* Address Book */,
 				8B747CE01F00565E00B2737F /* Products */,
 			);
@@ -162,7 +168,9 @@
 				8B4FE7F41F081DE6001F1CFF /* Details.swift in Sources */,
 				96D5BC4C1F67F53F00CD7462 /* Address Book.xcdatamodeld in Sources */,
 				8B5B38891F6434780016F15D /* ShowContactDetailsViewController.swift in Sources */,
+				96D5BC4F1F68027C00CD7462 /* Contact+CoreDataClass.swift in Sources */,
 				8B747CE51F00565E00B2737F /* AddressBookViewController.swift in Sources */,
+				96D5BC501F68027C00CD7462 /* Contact+CoreDataProperties.swift in Sources */,
 				8B4FE7F81F082627001F1CFF /* ContactTableViewCell.swift in Sources */,
 				8B4FE7F21F07DEA1001F1CFF /* ContactDetailsViewController.swift in Sources */,
 				8B747CE31F00565E00B2737F /* AppDelegate.swift in Sources */,

@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 /* Define the delegate protocol */
 protocol ContactDetailsViewControllerDelegate: class {
-  func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: Details)
+  func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: String)
 }
 
 class AddNewContactViewController: UIViewController {
@@ -19,7 +20,9 @@ class AddNewContactViewController: UIViewController {
   
   /* Optional variable to be able to refer to the delegate */
   weak var delegate: ContactDetailsViewControllerDelegate?
-    
+  
+  var managedContext: NSManagedObjectContext!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
   }
@@ -39,13 +42,23 @@ class AddNewContactViewController: UIViewController {
       return
     }
     
-    /* Instantiate a Details object with the values entered by the user */
-    let details = Details(firstName: firstName, lastName: lastName, emailAddress: emailAddress, phoneNumberString: phoneNumber, address: address)
-        
-    print("\(details)")
+    let contact = Contact(context: managedContext)
     
-    /* Pass the object back to delegate */
-    delegate?.addNewContactViewController(self, didFinishEditing: details)
+    contact.firstName = firstName
+    contact.lastName = lastName
+    contact.fullName = "\(firstName) \(lastName)"
+    contact.emailAddress = emailAddress
+    contact.phoneNumber = phoneNumber
+    contact.address = address
+    
+    do {
+      try managedContext.save()
+    } catch let error as NSError {
+      print("Save error: \(error), description: \(error.userInfo)")
+    }
+    
+    /* Pass the fullName back to delegate */
+    delegate?.addNewContactViewController(self, didFinishEditing: "\(contact.fullName)")
     
     /* Pops the view controller and returns back to AddressBookViewController */
     self.navigationController?.popToRootViewController(animated: true)

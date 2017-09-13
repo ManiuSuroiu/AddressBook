@@ -17,7 +17,7 @@ class ShowContactDetailsViewController: UITableViewController {
   @IBOutlet weak var phoneNumberLabel: UILabel!
   @IBOutlet weak var addressLabel: UILabel!
   
-  var details: Details!
+  var contactDetails: Contact!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -27,12 +27,12 @@ class ShowContactDetailsViewController: UITableViewController {
   }
   
   func updateUI() {
-    firstNameLabel.text! = details.firstName
+    firstNameLabel.text! = contactDetails.firstName
     navigationItem.title = firstNameLabel.text! /* Set the title of the navigation bar to the first name of the contact */
-    lastNameLabel.text! = details.lastName
-    emailAddressLabel.text! = details.emailAddress
-    phoneNumberLabel.text! = details.phoneNumberString
-    addressLabel.text! = details.address
+    lastNameLabel.text! = contactDetails.lastName
+    emailAddressLabel.text! = contactDetails.emailAddress
+    phoneNumberLabel.text! = contactDetails.phoneNumber
+    addressLabel.text! = contactDetails.address
   }
   
   // MARK: UITableViewDelegate
