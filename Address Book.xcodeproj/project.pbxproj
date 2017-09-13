@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		8B4FE7F21F07DEA1001F1CFF /* ContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */; };
-		8B4FE7F41F081DE6001F1CFF /* Details.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F31F081DE6001F1CFF /* Details.swift */; };
 		8B4FE7F81F082627001F1CFF /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */; };
 		8B5B38891F6434780016F15D /* ShowContactDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */; };
 		8B747CE31F00565E00B2737F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B747CE21F00565E00B2737F /* AppDelegate.swift */; };
@@ -25,7 +24,6 @@
 
 /* Begin PBXFileReference section */
 		8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailsViewController.swift; sourceTree = "<group>"; };
-		8B4FE7F31F081DE6001F1CFF /* Details.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Details.swift; sourceTree = "<group>"; };
 		8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowContactDetailsViewController.swift; sourceTree = "<group>"; };
 		8B747CDF1F00565E00B2737F /* Address Book.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Address Book.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,7 +81,6 @@
 				8B747CEE1F00565E00B2737F /* Info.plist */,
 				8BC5F6871F04362A0087FED7 /* AddNewContactViewController.swift */,
 				8B4FE7F11F07DEA1001F1CFF /* ContactDetailsViewController.swift */,
-				8B4FE7F31F081DE6001F1CFF /* Details.swift */,
 				8B4FE7F71F082626001F1CFF /* ContactTableViewCell.swift */,
 				8B5B38881F6434780016F15D /* ShowContactDetailsViewController.swift */,
 				96D5BC481F67DDDC00CD7462 /* CoreDataStack.swift */,
@@ -165,7 +162,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BC5F6881F04362A0087FED7 /* AddNewContactViewController.swift in Sources */,
-				8B4FE7F41F081DE6001F1CFF /* Details.swift in Sources */,
 				96D5BC4C1F67F53F00CD7462 /* Address Book.xcdatamodeld in Sources */,
 				8B5B38891F6434780016F15D /* ShowContactDetailsViewController.swift in Sources */,
 				96D5BC4F1F68027C00CD7462 /* Contact+CoreDataClass.swift in Sources */,

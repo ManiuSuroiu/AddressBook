@@ -9,17 +9,17 @@
 import UIKit
 import CoreData
 
-/* Define the delegate protocol */
+/* Define the delegate protocol
 protocol ContactDetailsViewControllerDelegate: class {
   func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: String)
-}
+} */
 
 class AddNewContactViewController: UIViewController {
 
   @IBOutlet weak var saveButton: UIButton!
   
-  /* Optional variable to be able to refer to the delegate */
-  weak var delegate: ContactDetailsViewControllerDelegate?
+  /* Optional variable to be able to refer to the delegate
+  weak var delegate: ContactDetailsViewControllerDelegate? */
   
   var managedContext: NSManagedObjectContext!
   
@@ -42,6 +42,7 @@ class AddNewContactViewController: UIViewController {
       return
     }
     
+    /* Initialize a new data model Contact and populate its properties with data entered by the user */
     let contact = Contact(context: managedContext)
     
     contact.firstName = firstName
@@ -51,14 +52,12 @@ class AddNewContactViewController: UIViewController {
     contact.phoneNumber = phoneNumber
     contact.address = address
     
+    /* Save on Core Data */
     do {
       try managedContext.save()
     } catch let error as NSError {
       print("Save error: \(error), description: \(error.userInfo)")
     }
-    
-    /* Pass the fullName back to delegate */
-    delegate?.addNewContactViewController(self, didFinishEditing: "\(contact.fullName)")
     
     /* Pops the view controller and returns back to AddressBookViewController */
     self.navigationController?.popToRootViewController(animated: true)

@@ -9,68 +9,78 @@
 import UIKit
 import CoreData
 
-class AddressBookViewController: UIViewController, ContactDetailsViewControllerDelegate {
+class AddressBookViewController: UIViewController {
   
   // MARK: Outlets
   @IBOutlet weak var contactsTableView: UITableView!
   @IBOutlet weak var addNewContact: UIButton!
   
-  /* An instance of the data model to hold the details of contacts entered by the user in ContactDetailsViewController */
-  var contactDetails: [Contact] = []
   var managedContext: NSManagedObjectContext!
-      
+  
+  /* Create an instance of NSFetchedResultsController to setup a fetch request - Lazy initialization - allocate it only when first used */
+  lazy var fetchedResultsController: NSFetchedResultsController<Contact> = {
+    
+    /* Create a fetch request using the data model and set its entity */
+    let fetchRequest = NSFetchRequest<Contact>()
+    let entity = Contact.entity()
+    fetchRequest.entity = entity
+    
+    /* Create a sort descriptor object to sort the objects (the names in the table view) alphabetically */
+    let sortDescriptor = NSSortDescriptor(key: "fullName", ascending: true)
+    fetchRequest.sortDescriptors = [sortDescriptor]
+    
+    /* The table view displays only a handful of objects at a time so the request fetches in batches of 20 objects (enough to populate the table view) to cut down on memory usage */
+    fetchRequest.fetchBatchSize = 20
+    
+    /* Once the fetch request is set up, initialize a NSFetchedResultsController */
+    let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                              managedObjectContext: self.managedContext,
+                                                              sectionNameKeyPath: nil,
+                                                              cacheName: nil)
+    
+    /* Set the view controller as its delegate to listen to notifications */
+    fetchedResultsController.delegate = self
+    return fetchedResultsController
+  }()
+  
+  /* Explicitly set the delegate to nil when NSFetchedResultController is no longer needed - the view controller doesn't get notifications that were still pending */
+  deinit {
+    fetchedResultsController.delegate = nil
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    /* Set a zero height table footer so the table view doesn't display extra cells */
-    contactsTableView.tableFooterView = UIView()
     performFetch()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    /* Hide the table view if there are no contacts to display (the array is empty) */
-    contactsTableView.isHidden = contactDetails.isEmpty
   }
   
   // MARK: prepare(for:sender:) - do the last preparation before the transition betwwen the screens
   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
     
-    /* If the user presses the "add new contact" button instantiate the AddNewContactViewController and tell it that this view controller is now its delegate */
+    /* If the user presses the "add new contact" button instantiate the AddNewContactViewController and pass it the managed object context var to handle the data entered by the user */
     if segue.identifier == "AddDetails" {
       
       let addNewContactViewController = segue.destination as! AddNewContactViewController
-      /*addNewContactViewController.delegate = self */
       addNewContactViewController.managedContext = managedContext
     
-      /* If the user taps on a cell instantiate the ShowContactDetailsViewController and pass it the details data for the contact specified at that indexPath */
+      /* If the user taps on a cell instantiate the ShowContactDetailsViewController and pass it the fetched data for the contact specified at that indexPath */
     } else if segue.identifier == "ShowDetails" {
       
       let showContactDetailsViewController = segue.destination as! ShowContactDetailsViewController
       if let indexPath = contactsTableView.indexPath(for: sender as! ContactTableViewCell) {
-        showContactDetailsViewController.contactDetails = contactDetails[indexPath.row]
+        showContactDetailsViewController.contactDetails = fetchedResultsController.object(at: indexPath)
       }
     }
   }
   
+  /* Call performFetch() on fetchedResultsController to get the data from Core Data */
   func performFetch() {
     
-    let fetchRequest = NSFetchRequest<Contact>()
-    let entity = Contact.entity()
-    fetchRequest.entity = entity
-    
     do {
-      contactDetails = try managedContext.fetch(fetchRequest)
+      try fetchedResultsController.performFetch()
     } catch let error as NSError {
       print("Could not fetch: \(error), description: \(error.userInfo)")
     }
-  }
-  
-  /* Implement the method from the protocol - add the new Details object to the data model and table view */
-  func addNewContactViewController(_ controller: AddNewContactViewController, didFinishEditing details: String) {
-    contactsTableView.reloadData()
-    navigationController?.popToRootViewController(animated: true)
   }
 }
 
@@ -79,12 +89,19 @@ class AddressBookViewController: UIViewController, ContactDetailsViewControllerD
 extension AddressBookViewController: UITableViewDataSource {
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return contactDetails.count
+    
+    /* The fetched results controller's sections property returns an array of NSFetchedResultsSectionInfo objects describing each section in the table view */
+    guard let sections = fetchedResultsController.sections else {
+      fatalError("No sections in fetchResultsController")
+    }
+    let sectionInfo = sections[section]
+    /* numberOfObjects property contains the number of rows */
+    return sectionInfo.numberOfObjects
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "contactCell", for: indexPath) as! ContactTableViewCell
-    let details = contactDetails[indexPath.row]
+    let details = fetchedResultsController.object(at: indexPath) /* Ask the fetchedResultsController for the object at the requested index-path */
     cell.nameLabel.text! = details.fullName
     return cell
   }
@@ -97,25 +114,99 @@ extension AddressBookViewController: UITableViewDataSource {
   func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
     
     if editingStyle == .delete {
-      let contactToRemove = contactDetails[indexPath.row]
+      /* Get the object at specified index-path and ask the managed context to delete it */
+      let contactToRemove = fetchedResultsController.object(at: indexPath)
       managedContext.delete(contactToRemove)
-      contactDetails.remove(at: indexPath.row)
     }
     
+    /* Save the changes made */
     do {
       try managedContext.save()
-      tableView.deleteRows(at: [indexPath], with: .automatic)
     } catch let error as NSError {
       print("Saving error: \(error), description: \(error.userInfo)")
     }
   }
 }
 
+// MARK: UITableViewDelegate
+
 extension AddressBookViewController: UITableViewDelegate {
   
   /* Deselct the cell when the user taps on it */
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
+  }
+}
+
+// MARK: NSFetchedResultsControllerDelegate - through this delegate NSFetchedResultsController informs the AddressBookViewController that objects have been added, changed or deleted. In response the view controller should update the table
+
+extension AddressBookViewController: NSFetchedResultsControllerDelegate {
+  
+  /* fetchResultsController is about to start */
+  func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    print("*** controllerWillChangeContent")
+    contactsTableView.beginUpdates()
+  }
+  
+  /* Notifies the view controller that a fetched object has been changed  - add, remove, update or move operation */
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                  didChange anObject: Any,
+                  at indexPath: IndexPath?,
+                  for type: NSFetchedResultsChangeType,
+                  newIndexPath: IndexPath?) {
+    
+    switch type {
+    
+    case .insert:
+      print("*** NSFetchedResultsChangeInsert (object)")
+      contactsTableView.insertRows(at: [newIndexPath!], with: .fade)
+    
+    case .delete:
+      print("*** NSFetchedResultsChangeDelete (object)")
+      contactsTableView.deleteRows(at: [indexPath!], with: .fade)
+    
+    case .update:
+      print("*** NSFetchedResultsChangeUpdate (object)")
+      if let cell = contactsTableView.cellForRow(at: indexPath!) as? ContactTableViewCell {
+        let contact = controller.object(at: indexPath!) as! Contact
+        cell.nameLabel.text! = contact.fullName
+      }
+      
+    case .move:
+      print("*** NSFetchedResultsChangeMove (object)")
+      contactsTableView.deleteRows(at: [indexPath!], with: .fade)
+      contactsTableView.insertRows(at: [newIndexPath!], with: .fade)
+    }
+  }
+  
+  /* Notifies the view controller that a section has been added or removed */
+  func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>,
+                  didChange sectionInfo: NSFetchedResultsSectionInfo,
+                  atSectionIndex sectionIndex: Int,
+                  for type: NSFetchedResultsChangeType) {
+    
+    switch type {
+    
+    case .insert:
+      print("*** NSFetchedResultsChangeInsert (section)")
+      contactsTableView.insertSections(IndexSet(integer: sectionIndex),
+                               with: .fade)
+    case .delete:
+      print("*** NSFetchedResultsChangeDelete (section)")
+      contactsTableView.deleteSections(IndexSet(integer: sectionIndex),
+                               with: .fade)
+    case .update:
+      print("*** NSFetchedResultsChangeUpdate (section)")
+    
+    case .move:
+      print("*** NSFetchedResultsChangeMove (section)")
+    }
+  }
+  
+  /* The fetchedResultsController has completed processing of one or more changes */
+  func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+    print("*** controllerDidChangeContent")
+    contactsTableView.endUpdates()
   }
 }
 
